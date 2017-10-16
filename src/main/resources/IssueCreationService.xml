@@ -1,0 +1,40 @@
+<someservice id="IssueCreationService">
+<description>BdasIssueCreationService</description>
+<properties>
+    <property>
+        <key>Project Key</key>
+        <name>Specify Project Key (required for service):</name>
+        <type>string</type>
+    </property>
+    <property>
+        <key>Reporter</key>
+        <name>Specify Reporter (required for service):</name>
+        <type>string</type>
+    </property>
+    <property>
+        <key>Assignee</key>
+        <name>Specify Assignee:</name>
+        <type>string</type>
+    </property>
+    <property>
+        <key>Summary</key>
+        <name>Specify Summary:</name>
+        <type>string</type>
+    </property>
+    <property>
+        <key>Issue Type ID</key>
+        <name>Specify Issue Type ID:</name>
+        <type>string</type>
+    </property>
+    <property>
+        <key>Priority ID</key>
+        <name>Specify Priority ID:</name>
+        <type>string</type>
+    </property>
+    <property>
+        <key>Description</key>
+        <name>Specify Description:</name>
+        <type>string</type>
+    </property>
+</properties>
+</someservice>
