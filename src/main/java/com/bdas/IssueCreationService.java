@@ -12,7 +12,7 @@ import com.atlassian.jira.user.ApplicationUser;
 import com.opensymphony.module.propertyset.PropertySet;
 
 public class IssueCreationService extends AbstractService {
-    private String projectKey, reporter, assignee, summary, issueTypeID, description, priotityID = null;
+    private String projectKey, reporter, assignee, summary, issueTypeID, description, priotityID;
     private Project project = null;
 
     @Override
@@ -44,25 +44,31 @@ public class IssueCreationService extends AbstractService {
 
             IssueService issueService = ComponentAccessor.getIssueService();
             IssueInputParameters issueInputParameters = issueService.newIssueInputParameters();
-
             ApplicationUser applicationUser = ComponentAccessor.getUserManager().getUserByKey(reporter);
+
+            //required for service
             JiraAuthenticationContext jiraAuthenticationContextReporter = ComponentAccessor.getJiraAuthenticationContext();
             jiraAuthenticationContextReporter.setLoggedInUser(applicationUser);
 
-            issueInputParameters.setProjectId(project.getId())
-                    .setIssueTypeId(issueTypeID)
-                    .setSummary(summary)
-                    .setReporterId(jiraAuthenticationContextReporter.getLoggedInUser().getUsername())
-                    .setDescription(description)
-                    .setPriorityId(priotityID);
+            if (applicationUser != null) {
+                issueInputParameters.setProjectId(project.getId())
+                        .setReporterId(applicationUser.getUsername())
+                        .setPriorityId(priotityID)
+                        .setSummary(summary)
+                        .setIssueTypeId(issueTypeID)
+                        .setDescription(description)
+                        .setSkipScreenCheck(true);
 
-            IssueService.CreateValidationResult createValidationResult = issueService.validateCreate(applicationUser, issueInputParameters);
-            //List<String> errors = (List<String>) createValidationResult.getErrorCollection().getErrorMessages();
-            if (createValidationResult.isValid()) {
-                IssueService.IssueResult createResult = issueService.create(applicationUser, createValidationResult);
-                if (createResult.isValid() && assignee != null) {
-                    IssueService.AssignValidationResult assignValidationResult = issueService.validateAssign(applicationUser, createResult.getIssue().getId(), assignee);
-                    if (assignValidationResult.isValid()) issueService.assign(applicationUser, assignValidationResult);
+                IssueService.CreateValidationResult createValidationResult = issueService.validateCreate(applicationUser, issueInputParameters);
+                if (createValidationResult.isValid()) {
+                    IssueService.IssueResult createResult = issueService.create(applicationUser, createValidationResult);
+
+                    if (createResult.isValid() && assignee != null)
+                    {
+                        IssueService.AssignValidationResult assignValidationResult = issueService.validateAssign(applicationUser, createResult.getIssue().getId(), assignee);
+
+                        if (assignValidationResult.isValid()) issueService.assign(applicationUser, assignValidationResult);
+                    }
                 }
             }
         }

@@ -1,5 +1,5 @@
 <someservice id="IssueCreationService">
-<description>BdasIssueCreationService</description>
+<description>Issue Creation Service</description>
 <properties>
     <property>
         <key>Project Key</key>
@@ -23,12 +23,12 @@
     </property>
     <property>
         <key>Issue Type ID</key>
-        <name>Specify Issue Type ID:</name>
-        <type>string</type>
+        <name>Specify Issue Type ID(default - 10000):</name>
+        <type>number</type>
     </property>
     <property>
         <key>Priority ID</key>
-        <name>Specify Priority ID:</name>
+        <name>Specify Priority ID(default - 3):</name>
         <type>string</type>
     </property>
     <property>
