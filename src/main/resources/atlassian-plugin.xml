@@ -13,11 +13,7 @@
     <!-- add our web resources -->
     <web-resource key="IssueCreationServicePlugin-resources" name="IssueCreationServicePlugin Web Resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
-        
-        <resource type="download" name="IssueCreationServicePlugin.css" location="/css/IssueCreationServicePlugin.css"/>
-        <resource type="download" name="IssueCreationServicePlugin.js" location="/js/IssueCreationServicePlugin.js"/>
         <resource type="download" name="images/" location="/images"/>
-
         <context>IssueCreationServicePlugin</context>
     </web-resource>
     
