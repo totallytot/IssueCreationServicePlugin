@@ -12,8 +12,7 @@ import com.atlassian.jira.user.ApplicationUser;
 import com.opensymphony.module.propertyset.PropertySet;
 
 public class IssueCreationService extends AbstractService {
-    private String projectKey, reporter, assignee, summary, issueTypeID, description, priotityID;
-    private Project project = null;
+    private String projectKey, reporter, assignee, summary, issueTypeID, description, priorityID;
 
     @Override
     public void init(PropertySet props) throws ObjectConfigurationException {
@@ -32,15 +31,15 @@ public class IssueCreationService extends AbstractService {
         if (hasProperty("Issue Type ID")) issueTypeID = getProperty("Issue Type ID");
         else issueTypeID = "10000";
 
-        if (hasProperty("Priority ID")) priotityID = getProperty("Priority ID");
-        else priotityID = "3";
+        if (hasProperty("Priority ID")) priorityID = getProperty("Priority ID");
+        else priorityID = "3";
     }
 
     @Override
     public void run() {
         if (projectKey != null || reporter != null) {
 
-            project = ComponentAccessor.getProjectManager().getProjectByCurrentKeyIgnoreCase(projectKey);
+            Project project = ComponentAccessor.getProjectManager().getProjectByCurrentKeyIgnoreCase(projectKey);
 
             IssueService issueService = ComponentAccessor.getIssueService();
             IssueInputParameters issueInputParameters = issueService.newIssueInputParameters();
@@ -53,20 +52,21 @@ public class IssueCreationService extends AbstractService {
             if (applicationUser != null) {
                 issueInputParameters.setProjectId(project.getId())
                         .setReporterId(applicationUser.getUsername())
-                        .setPriorityId(priotityID)
+                        .setPriorityId(priorityID)
                         .setSummary(summary)
                         .setIssueTypeId(issueTypeID)
                         .setDescription(description)
                         .setSkipScreenCheck(true);
 
-                IssueService.CreateValidationResult createValidationResult = issueService.validateCreate(applicationUser, issueInputParameters);
+                IssueService.CreateValidationResult createValidationResult = issueService.validateCreate(applicationUser,
+                        issueInputParameters);
                 if (createValidationResult.isValid()) {
                     IssueService.IssueResult createResult = issueService.create(applicationUser, createValidationResult);
 
                     if (createResult.isValid() && assignee != null)
                     {
-                        IssueService.AssignValidationResult assignValidationResult = issueService.validateAssign(applicationUser, createResult.getIssue().getId(), assignee);
-
+                        IssueService.AssignValidationResult assignValidationResult = issueService.
+                                validateAssign(applicationUser, createResult.getIssue().getId(), assignee);
                         if (assignValidationResult.isValid()) issueService.assign(applicationUser, assignValidationResult);
                     }
                 }

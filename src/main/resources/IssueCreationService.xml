@@ -3,37 +3,37 @@
 <properties>
     <property>
         <key>Project Key</key>
-        <name>Specify Project Key (required for service):</name>
+        <name>Project Key (required):</name>
         <type>string</type>
     </property>
     <property>
         <key>Reporter</key>
-        <name>Specify Reporter (required for service):</name>
+        <name>Reporter (required):</name>
         <type>string</type>
     </property>
     <property>
         <key>Assignee</key>
-        <name>Specify Assignee:</name>
+        <name>Assignee:</name>
         <type>string</type>
     </property>
     <property>
         <key>Summary</key>
-        <name>Specify Summary:</name>
+        <name>Summary:</name>
         <type>string</type>
     </property>
     <property>
         <key>Issue Type ID</key>
-        <name>Specify Issue Type ID(default - 10000):</name>
-        <type>number</type>
+        <name>Issue Type ID (default=10000):</name>
+        <type>string</type>
     </property>
     <property>
         <key>Priority ID</key>
-        <name>Specify Priority ID(default - 3):</name>
+        <name>Priority ID (default=3):</name>
         <type>string</type>
     </property>
     <property>
         <key>Description</key>
-        <name>Specify Description:</name>
+        <name>Description:</name>
         <type>string</type>
     </property>
 </properties>
