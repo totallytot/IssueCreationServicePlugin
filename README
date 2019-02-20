@@ -1,3 +1,14 @@
 Navigate to cog icon -> System -> Services -> Add Service
 Name: any you like
 Class: com.bdas.IssueCreationService
+
+Issue creation service accepts the following parameters:
+- project key (required);
+- reporter (required);
+- assignee;
+- issue type id;
+- priority id;
+- summary;
+- description.
+
+Limit is 256 symbols.
